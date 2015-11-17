@@ -18,6 +18,7 @@ import com.ncsoft.platform.javamonitoringapp.fragments.StatusCheckFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Fragment currentFragment;
     private StatusCheckFragment statusCheckFragment;
     private PerformanceMonitorFragment performanceMonitorFragment;
 
@@ -37,9 +38,22 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        statusCheckFragment = new StatusCheckFragment();
+        if (savedInstanceState == null) {
+            statusCheckFragment = new StatusCheckFragment();
+            performanceMonitorFragment = new PerformanceMonitorFragment();
+            currentFragment = statusCheckFragment;
+        } else {
+            //TODO : reload
+            statusCheckFragment = new StatusCheckFragment();
+            performanceMonitorFragment = new PerformanceMonitorFragment();
+        }
 
-        performanceMonitorFragment = new PerformanceMonitorFragment();
+        currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (currentFragment == null) {
+            currentFragment = statusCheckFragment;
+        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
     }
 
     @Override
@@ -83,10 +97,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camara) {
-            fragmentManager.beginTransaction().replace(R.id.fragment_main, statusCheckFragment).addToBackStack(null).commit();
-            // Handle the camera action
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, statusCheckFragment)
+                    .commit();
         } else if (id == R.id.nav_gallery) {
-            fragmentManager.beginTransaction().replace(R.id.fragment_main, performanceMonitorFragment).addToBackStack(null).commit();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, performanceMonitorFragment)
+                    .commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

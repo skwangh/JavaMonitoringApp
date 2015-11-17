@@ -1,12 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:rowCount="3"
+    android:columnCount="2">
 
-    <TextView
+
+    <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Performance Monitor"
-        android:id="@+id/dummy_textView2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+        android:id="@+id/spinner_chart_type"
+        android:spinnerMode="dropdown"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_gravity="center|fill" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_chart_time_unit"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_gravity="center|fill" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_chart"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_gravity="center|fill" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_view_chart_item"
+        android:layout_row="2"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_gravity="center|fill" />
+
+</GridLayout>
