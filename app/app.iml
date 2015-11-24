@@ -95,9 +95,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="commons-io-2.4" level="project" />
     <orderEntry type="library" exported="" name="MPAndroidChart-v2.1.6" level="project" />
+    <orderEntry type="library" exported="" name="javax.mail-1.4.7" level="project" />
     <orderEntry type="library" exported="" name="jstl-1.2" level="project" />
     <orderEntry type="library" exported="" name="stax2-api-3.1.4" level="project" />
-    <orderEntry type="library" exported="" name="javax.mail-1.4.7" level="project" />
     <orderEntry type="library" exported="" name="fst-1.28" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="commons-lang3-3.1" level="project" />
