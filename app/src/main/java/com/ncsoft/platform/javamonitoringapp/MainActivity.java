@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             statusCheckFragment = new StatusCheckFragment();
             performanceMonitorFragment = new PerformanceMonitorFragment();
-            currentFragment = statusCheckFragment;
         } else {
             //TODO : reload
             statusCheckFragment = new StatusCheckFragment();
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity
 
         currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (currentFragment == null) {
-            currentFragment = statusCheckFragment;
+            currentFragment = performanceMonitorFragment;
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, currentFragment).commit();

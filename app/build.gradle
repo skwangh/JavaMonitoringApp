@@ -10,7 +10,6 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -30,8 +29,6 @@ android {
 
 repositories {
     maven { url "https://jitpack.io" }
-    //maven { url "http://devops.korea.ncsoft.corp/repo/repo2-cache" }
-    maven { url "http://mpweb02:8081/service/local/repositories/ncsoft-releases/content" }
 }
 
 dependencies {
@@ -40,6 +37,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
-    compile 'com.ncsoft.platform.monitoring:java-monitoring-component:2.0.0'
-    compile 'org.slf4j:slf4j-api:1.7.5'
 }
