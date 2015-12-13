@@ -51,14 +51,10 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
     ListView chartItemListView;
     LegendAdapter legendAdapter;
 
-    RelativeLayout layout;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //view = inflater.inflate(R.layout.fragment_performancemonitor, container, false);
-        view = inflater.inflate(R.layout.test_layout, container, false);
-        layout = (RelativeLayout)view.findViewById(R.id.layout_performance_monitor);
+        view = inflater.inflate(R.layout.fragment_performancemonitor, container, false);
         addItemsOnChartTypeSpinner();
         addItemsOnChartTimeUnitSpinner();
 
@@ -68,14 +64,12 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         legend.setEnabled(false);
         chart.setDescription("");
         chart.setTouchEnabled(true);
-        chart.setClickable(true);
         chart.setMarkerView(new SimpleMarkerView(view.getContext(), R.layout.layout_markerview));
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         chart.getXAxis().setDrawGridLines(false);
         chart.getAxisLeft().setDrawGridLines(false);
         chart.getAxisRight().setDrawGridLines(false);
         chart.getAxisRight().setDrawLabels(false);
-        chart.setDrawMarkerViews(true);
         chart.setOnChartValueSelectedListener(this);
         chart.setData(MpChartUtils.getDummyData(0));
         chart.invalidate();
@@ -162,7 +156,7 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         @Override
         public void refreshContent(Entry e, Highlight highlight) {
             String xVal = chart.getXAxis().getValues().get(highlight.getXIndex());
-            marker.setText(xVal + ", " + e.getVal());
+            marker.setText(xVal + "\n" + e.getVal());
         }
 
         @Override
@@ -179,7 +173,7 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
 
         @Override
         public int getYOffset(float ypos) {
-            return -getHeight();
+            return (int)(getHeight() * -1.2);
         }
     }
 }
