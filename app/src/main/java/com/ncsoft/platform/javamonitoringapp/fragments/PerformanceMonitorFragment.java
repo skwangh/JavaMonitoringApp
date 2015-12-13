@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapLabel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.MarkerView;
@@ -69,6 +71,10 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         chart.setClickable(true);
         chart.setMarkerView(new SimpleMarkerView(view.getContext(), R.layout.layout_markerview));
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getAxisRight().setDrawGridLines(false);
+        chart.getAxisRight().setDrawLabels(false);
         chart.setDrawMarkerViews(true);
         chart.setOnChartValueSelectedListener(this);
         chart.setData(MpChartUtils.getDummyData(0));
@@ -123,16 +129,19 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         });
     }
 
+    //리스트에서 클릭할때
     private void updateSelectedChartItem(int position) {
         legendAdapter.setLineSelected(position);
         chart.invalidate();
+        chart.setDrawMarkerViews(false);    //markerView를 그리지 않는다.
     }
 
-
+    //차트에서 선택할때
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
         chartItemListView.setSelection(dataSetIndex);
         chartItemListView.performItemClick(null, dataSetIndex, legendAdapter.getItemId(dataSetIndex));
+        chart.setDrawMarkerViews(true);    //markerView를 그려준다.
     }
 
     @Override
@@ -143,28 +152,33 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
 
     public class SimpleMarkerView extends MarkerView {
 
-        private TextView textMarkerview;
+        private BootstrapLabel marker;
 
         public SimpleMarkerView(Context context, int layoutResource) {
             super(context, layoutResource);
-            textMarkerview = (TextView) findViewById(R.id.text_markerview);
+            marker = (BootstrapLabel) findViewById(R.id.label_markerview);
         }
 
         @Override
         public void refreshContent(Entry e, Highlight highlight) {
             String xVal = chart.getXAxis().getValues().get(highlight.getXIndex());
-            textMarkerview.setText(xVal + System.getProperty("line.separator") + e.getVal());
+            marker.setText(xVal + ", " + e.getVal());
         }
 
         @Override
         public int getXOffset(float xpos) {
-            // this will center the marker-view horizontally
-            return -(getWidth() / 2);
+            int defaultOffset = getWidth() / 2;
+            if (xpos < defaultOffset) {
+                return (int)xpos * -1;
+            } else if (chart.getWidth() - xpos < defaultOffset) {
+                return (int)(getWidth() - (chart.getWidth() - xpos)) * -1;
+            } else {
+                return defaultOffset * -1;
+            }
         }
 
         @Override
         public int getYOffset(float ypos) {
-            // this will cause the marker-view to be above the selected value
             return -getHeight();
         }
     }
