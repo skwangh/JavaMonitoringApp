@@ -35,7 +35,7 @@ public class MpChartUtils {
                 yValList.add(entry);
             }
             LineDataSet lineDataSet = new LineDataSet(yValList, taskName);
-            lineDataSet.setColor(Color.BLACK);
+            lineDataSet.setColor(ColorUtils.getColor(i));
             lineDataSet.setLineWidth(0.5f);
             lineDataSet.setDrawValues(false);
             lineDataSet.setDrawCircleHole(false);
@@ -51,8 +51,6 @@ public class MpChartUtils {
         if (startIndex >= 0 && startIndex < dummyDataSetList.size()) {
             for (int i = startIndex ; i < dummyDataSetList.size() ; i++) {
                 LineDataSet lineDataSet = dummyDataSetList.get(i);
-                lineDataSet.setColor(Color.RED);
-                lineDataSet.setLineWidth(0.5f);
                 lineDataSetList.add(lineDataSet);
                 if (lineDataSetList.size() >= 50) {
                     break;

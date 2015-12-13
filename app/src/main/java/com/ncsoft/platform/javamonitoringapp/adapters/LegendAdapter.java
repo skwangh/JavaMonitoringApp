@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.ncsoft.platform.javamonitoringapp.R;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by skwangh on 2015-12-11.
@@ -23,6 +25,9 @@ public class LegendAdapter  extends BaseAdapter {
     public LegendAdapter(List<LineDataSet> lineDataSetList) {
         this.lineDataSetList = lineDataSetList;
     }
+
+    private Map<Integer, View> viewMap = new HashMap<Integer, View>();
+
 
     @Override
     public int getCount() {
@@ -43,21 +48,21 @@ public class LegendAdapter  extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final Context context = parent.getContext();
 
-        if (convertView == null) {
+        View view = viewMap.get(position);
+        if (view == null) {
             LineDataSet lineDataSet = lineDataSetList.get(position);
 
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_legend, parent, false);
+            view = inflater.inflate(R.layout.layout_legend, null);
 
+            TextView labelView = (TextView) view.findViewById(R.id.layout_legend_label);
+            labelView.setText(lineDataSet.getLabel());
 
-            TextView labelView = (TextView) convertView.findViewById(R.id.layout_legend_label);
-            labelView.setText(position + " : " + lineDataSet.getLabel());
-
-            LinearLayout colorLayout = (LinearLayout) convertView.findViewById(R.id.layout_legend_color);
+            LinearLayout colorLayout = (LinearLayout) view.findViewById(R.id.layout_legend_color);
             colorLayout.setBackgroundColor(lineDataSet.getColor());
         }
 
-        return convertView;
+        return view;
     }
 
 }

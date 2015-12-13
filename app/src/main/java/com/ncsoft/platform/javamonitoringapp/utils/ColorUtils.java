@@ -7,7 +7,7 @@ import android.graphics.Color;
  */
 public class ColorUtils {
 
-    public int getColor(int index) {
+    public static int getColor(int index) {
         return colorSet[index % colorSet.length];
     }
 
