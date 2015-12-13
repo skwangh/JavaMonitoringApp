@@ -1,5 +1,6 @@
 package com.ncsoft.platform.javamonitoringapp.fragments;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
@@ -9,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,7 +20,13 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.MarkerView;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.ncsoft.platform.javamonitoringapp.R;
 import com.ncsoft.platform.javamonitoringapp.adapters.LegendAdapter;
 import com.ncsoft.platform.javamonitoringapp.utils.MpChartUtils;
@@ -27,34 +35,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Toast;
 
 /**
  * Created by Administrator on 2015-11-15.
  */
-public class PerformanceMonitorFragment extends Fragment {
+public class PerformanceMonitorFragment extends Fragment implements OnChartValueSelectedListener {
 
     View view;
+
     Spinner chartTypeSpinner, chartTimeUnitSpinner;
-    ListView chartItemListView;
     LineChart chart;
+    ListView chartItemListView;
+    LegendAdapter legendAdapter;
 
     RelativeLayout layout;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_performance_monitor, container, false);
+        //view = inflater.inflate(R.layout.fragment_performancemonitor, container, false);
+        view = inflater.inflate(R.layout.test_layout, container, false);
         layout = (RelativeLayout)view.findViewById(R.id.layout_performance_monitor);
         addItemsOnChartTypeSpinner();
         addItemsOnChartTimeUnitSpinner();
 
+        //draw chart
         chart = (LineChart)view.findViewById(R.id.view_chart);
+        Legend legend = chart.getLegend();
+        legend.setEnabled(false);
+        chart.setDescription("");
+        chart.setTouchEnabled(true);
+        chart.setClickable(true);
+        chart.setMarkerView(new SimpleMarkerView(view.getContext(), R.layout.layout_markerview));
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.setDrawMarkerViews(true);
+        chart.setOnChartValueSelectedListener(this);
         chart.setData(MpChartUtils.getDummyData(0));
         chart.invalidate();
 
-        Legend legend = chart.getLegend();
-        legend.setEnabled(false);
-
+        //draw custom legend
         addItemsOnListChartItem();
 
 
@@ -87,13 +107,65 @@ public class PerformanceMonitorFragment extends Fragment {
 
     private void addItemsOnListChartItem() {
         chartItemListView = (ListView) view.findViewById(R.id.list_view_chart_item);
+        //chartItemListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         List<LineDataSet> lineDataSetList = chart.getData().getDataSets();
 
-        LegendAdapter legendAdapter = new LegendAdapter(lineDataSetList);
+        legendAdapter = new LegendAdapter(this, lineDataSetList);
 
         chartItemListView.setAdapter(legendAdapter);
 
+        chartItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                updateSelectedChartItem(position);
+            }
+        });
     }
 
+    private void updateSelectedChartItem(int position) {
+        legendAdapter.setLineSelected(position);
+        chart.invalidate();
+    }
+
+
+    @Override
+    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+        chartItemListView.setSelection(dataSetIndex);
+        chartItemListView.performItemClick(null, dataSetIndex, legendAdapter.getItemId(dataSetIndex));
+    }
+
+    @Override
+    public void onNothingSelected() {
+        //Do Nothing
+    }
+
+
+    public class SimpleMarkerView extends MarkerView {
+
+        private TextView textMarkerview;
+
+        public SimpleMarkerView(Context context, int layoutResource) {
+            super(context, layoutResource);
+            textMarkerview = (TextView) findViewById(R.id.text_markerview);
+        }
+
+        @Override
+        public void refreshContent(Entry e, Highlight highlight) {
+            String xVal = chart.getXAxis().getValues().get(highlight.getXIndex());
+            textMarkerview.setText(xVal + System.getProperty("line.separator") + e.getVal());
+        }
+
+        @Override
+        public int getXOffset(float xpos) {
+            // this will center the marker-view horizontally
+            return -(getWidth() / 2);
+        }
+
+        @Override
+        public int getYOffset(float ypos) {
+            // this will cause the marker-view to be above the selected value
+            return -getHeight();
+        }
+    }
 }

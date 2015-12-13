@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.data.LineDataSet;
 import com.ncsoft.platform.javamonitoringapp.R;
+import com.ncsoft.platform.javamonitoringapp.fragments.PerformanceMonitorFragment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,17 +19,20 @@ import java.util.Map;
 /**
  * Created by skwangh on 2015-12-11.
  */
-public class LegendAdapter  extends BaseAdapter {
+public class LegendAdapter extends BaseAdapter {
 
+    private PerformanceMonitorFragment performanceMonitorFragment;
     private List<LineDataSet> lineDataSetList;
 
-    public LegendAdapter(List<LineDataSet> lineDataSetList) {
+    public LegendAdapter(PerformanceMonitorFragment performanceMonitorFragment, List<LineDataSet> lineDataSetList) {
+        this.performanceMonitorFragment = performanceMonitorFragment;
         this.lineDataSetList = lineDataSetList;
     }
 
+
     private Map<Integer, View> viewMap = new HashMap<Integer, View>();
 
-
+    /* 추상메서드 구현 */
     @Override
     public int getCount() {
         return lineDataSetList.size();
@@ -65,4 +69,13 @@ public class LegendAdapter  extends BaseAdapter {
         return view;
     }
 
+    public void setLineSelected(int position) {
+        for (int i = 0 ; i < lineDataSetList.size() ; i++) {
+            if (position == i) {
+                lineDataSetList.get(i).setLineWidth(4f);
+            } else {
+                lineDataSetList.get(i).setLineWidth(0.5f);
+            }
+        }
+    }
 }

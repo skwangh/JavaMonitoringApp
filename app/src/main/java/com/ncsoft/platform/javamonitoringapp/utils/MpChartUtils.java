@@ -52,9 +52,9 @@ public class MpChartUtils {
             for (int i = startIndex ; i < dummyDataSetList.size() ; i++) {
                 LineDataSet lineDataSet = dummyDataSetList.get(i);
                 lineDataSetList.add(lineDataSet);
-                if (lineDataSetList.size() >= 50) {
-                    break;
-                }
+//                if (lineDataSetList.size() >= 50) {
+//                    break;
+//                }
             }
         }
 
