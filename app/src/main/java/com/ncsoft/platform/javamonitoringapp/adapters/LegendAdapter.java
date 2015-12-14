@@ -74,7 +74,7 @@ public class LegendAdapter extends BaseAdapter {
             if (position == i) {
                 lineDataSetList.get(i).setLineWidth(4f);
             } else {
-                lineDataSetList.get(i).setLineWidth(0.5f);
+                lineDataSetList.get(i).setLineWidth(1f);
             }
         }
     }

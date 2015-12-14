@@ -36,7 +36,7 @@ public class MpChartUtils {
             }
             LineDataSet lineDataSet = new LineDataSet(yValList, taskName);
             lineDataSet.setColor(ColorUtils.getColor(i));
-            lineDataSet.setLineWidth(0.5f);
+            lineDataSet.setLineWidth(1f);
             lineDataSet.setDrawValues(false);
             lineDataSet.setDrawCircleHole(false);
             lineDataSet.setDrawCircles(false);

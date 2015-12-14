@@ -14,7 +14,7 @@ public class ColorUtils {
     private static int[] colorSet = new int[] {
             Color.rgb(255,0,0)
             ,Color.rgb(255,153,0)
-            ,Color.rgb(204,255,0)
+            ,Color.rgb(184,235,0)
             ,Color.rgb(51,255,0)
             ,Color.rgb(0,255,255)
             ,Color.rgb(0,102,255)
@@ -23,7 +23,7 @@ public class ColorUtils {
             ,Color.rgb(255,0,153)
             ,Color.rgb(255,128,128)
             ,Color.rgb(255,204,128)
-            ,Color.rgb(229,255,128)
+            ,Color.rgb(209,235,108)
             ,Color.rgb(153,255,128)
             ,Color.rgb(128,255,178)
             ,Color.rgb(128,179,255)
