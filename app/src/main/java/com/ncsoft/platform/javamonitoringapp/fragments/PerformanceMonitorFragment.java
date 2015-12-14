@@ -42,7 +42,7 @@ import android.widget.Toast;
 /**
  * Created by Administrator on 2015-11-15.
  */
-public class PerformanceMonitorFragment extends Fragment implements OnChartValueSelectedListener {
+public class PerformanceMonitorFragment extends Fragment implements OnChartValueSelectedListener, AdapterView.OnItemSelectedListener {
 
     View view;
 
@@ -90,7 +90,7 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         list.add("MAX_STACK_TIME");
         list.add("TOTAL_COUNT");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_spinner, list);
-        dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        dataAdapter.setDropDownViewResource(R.layout.layout_spinner);
         chartTypeSpinner.setAdapter(dataAdapter);
     }
 
@@ -101,7 +101,7 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         list.add("FIVE_MINUTES");
         list.add("ONE_HOUR");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_spinner, list);
-        dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        dataAdapter.setDropDownViewResource(R.layout.layout_spinner);
         chartTimeUnitSpinner.setAdapter(dataAdapter);
     }
 
@@ -141,6 +141,16 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
     @Override
     public void onNothingSelected() {
         //Do Nothing
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
 
