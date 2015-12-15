@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.ncsoft.platform.javamonitoringapp.R;
 import com.ncsoft.platform.javamonitoringapp.adapters.LegendAdapter;
+import com.ncsoft.platform.javamonitoringapp.constants.Tags;
 import com.ncsoft.platform.javamonitoringapp.utils.MpChartUtils;
 
 import java.util.ArrayList;
@@ -90,8 +92,9 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         list.add("MAX_STACK_TIME");
         list.add("TOTAL_COUNT");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_spinner, list);
-        dataAdapter.setDropDownViewResource(R.layout.layout_spinner);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chartTypeSpinner.setAdapter(dataAdapter);
+        chartTypeSpinner.setOnItemSelectedListener(this);
     }
 
     private void addItemsOnChartTimeUnitSpinner() {
@@ -101,8 +104,9 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         list.add("FIVE_MINUTES");
         list.add("ONE_HOUR");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_spinner, list);
-        dataAdapter.setDropDownViewResource(R.layout.layout_spinner);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chartTimeUnitSpinner.setAdapter(dataAdapter);
+        chartTimeUnitSpinner.setOnItemSelectedListener(this);
     }
 
     private void addItemsOnListChartItem() {
@@ -140,12 +144,13 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
 
     @Override
     public void onNothingSelected() {
-        //Do Nothing
+
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        Object item = parent.getSelectedItem();
+        Log.e(Tags.APP, item.getClass().getName());
     }
 
     @Override
