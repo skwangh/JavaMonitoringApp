@@ -47,16 +47,24 @@ import android.widget.Toast;
 public class PerformanceMonitorFragment extends Fragment implements OnChartValueSelectedListener, AdapterView.OnItemSelectedListener {
 
     View view;
+    PerformanceMonitorFragment performanceMonitorFragment;
 
     Spinner chartTypeSpinner, chartTimeUnitSpinner;
     LineChart chart;
     ListView chartItemListView;
     LegendAdapter legendAdapter;
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_performancemonitor, container, false);
+        performanceMonitorFragment = this;
+
+        Log.e(Tags.APP, savedInstanceState != null ? savedInstanceState.toString() : "savedInstanceState is null");
+
+
         addItemsOnChartTypeSpinner();
         addItemsOnChartTimeUnitSpinner();
 
@@ -83,6 +91,14 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         return view;
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        chartTimeUnitSpinner.setSelection(1);
+        Log.e(Tags.APP, "current selection : " + chartTimeUnitSpinner.getSelectedItem().toString());
+
+    }
 
     private void addItemsOnChartTypeSpinner() {
 
@@ -94,7 +110,12 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_spinner, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chartTypeSpinner.setAdapter(dataAdapter);
-        chartTypeSpinner.setOnItemSelectedListener(this);
+        chartTypeSpinner.post(new Runnable() {
+            @Override
+            public void run() {
+                chartTypeSpinner.setOnItemSelectedListener(performanceMonitorFragment);
+            }
+        });
     }
 
     private void addItemsOnChartTimeUnitSpinner() {
@@ -106,7 +127,13 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.layout_spinner, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chartTimeUnitSpinner.setAdapter(dataAdapter);
-        chartTimeUnitSpinner.setOnItemSelectedListener(this);
+        chartTimeUnitSpinner.setSelection(1);
+        chartTimeUnitSpinner.post(new Runnable() {
+            @Override
+            public void run() {
+                chartTimeUnitSpinner.setOnItemSelectedListener(performanceMonitorFragment);
+            }
+        });
     }
 
     private void addItemsOnListChartItem() {
@@ -150,7 +177,7 @@ public class PerformanceMonitorFragment extends Fragment implements OnChartValue
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Object item = parent.getSelectedItem();
-        Log.e(Tags.APP, item.getClass().getName());
+        Log.e(Tags.APP, item.toString());
     }
 
     @Override
