@@ -24,7 +24,7 @@
                 android:orientation="horizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:layout_weight="45"
                 >
                 <Spinner
                     android:id="@+id/spinner_chart_type"
@@ -36,12 +36,31 @@
                 android:orientation="horizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:layout_weight="45"
                 >
                 <Spinner
                     android:id="@+id/spinner_chart_time_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:layout_marginTop="3dp"
+                >
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/button_reload_chart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fontAwesomeIcon="fa_refresh"
+                    app:bootstrapBrand="success"
+                    app:bootstrapSize="xs"
+                    app:buttonMode="regular"
+                    app:showOutline="false"
+                    app:roundedCorners="true"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -64,22 +83,49 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             >
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Filter : "
-                android:textSize="10dp"
-                />
-            <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:id="@+id/edittext_chart_filter"
-                android:layout_width="fill_parent"
+                android:layout_weight="90"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter : "
+                    android:textSize="10dp"
+                    />
+                <com.beardedhen.androidbootstrap.BootstrapEditText
+                    android:id="@+id/edittext_chart_filter"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:inputType="textShortMessage"
+                    app:bootstrapSize="xs"
+                    app:roundedCorners="true"
+                    app:bootstrapBrand="primary"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:lines="1"
-                android:inputType="textShortMessage"
-                app:bootstrapSize="xs"
-                app:roundedCorners="true"
-                app:bootstrapBrand="primary"
-                />
+                android:layout_weight="10"
+                >
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/button_clear_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="1dp"
+                    app:fontAwesomeIcon="fa_times"
+                    app:bootstrapBrand="warning"
+                    app:bootstrapSize="xs"
+                    app:buttonMode="regular"
+                    app:showOutline="false"
+                    app:roundedCorners="true"
+                    />
+            </LinearLayout>
         </LinearLayout>
         <ListView
             android:id="@+id/list_view_chart_item"
